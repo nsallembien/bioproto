@@ -101,7 +101,7 @@ log4j = {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     }
 
-    warn  'org.codehaus.groovy.grails.web.servlet',        // controllers
+    info  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
@@ -116,8 +116,16 @@ log4j = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.bioproto.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.bioproto.UserRole'
-grails.plugins.springsecurity.authority.className = 'com.bioproto.Role'
-
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bioproto.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.bioproto.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.bioproto.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]
 

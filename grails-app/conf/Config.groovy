@@ -98,10 +98,10 @@ log4j = {
     // Example of changing the log pattern for the default console appender:
     //
     appenders {
-        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        console name:'stdout', layout:pattern(conversionPattern: '%d:%p:%c{2} %m%n')
     }
 
-    info  'org.codehaus.groovy.grails.web.servlet',        // controllers
+    warn  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
@@ -112,5 +112,48 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+           'grails.plugins.twitterbootstrap'
 }
+
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bioproto.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.bioproto.UserRole'
+grails.plugin.springsecurity.authority.className = 'com.bioproto.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll'],
+    '/aclClass/**': ['ROLE_ADMIN'],
+    '/aclSid/**': ['ROLE_ADMIN'],
+    '/aclObjectIdentity/**': ['ROLE_ADMIN'],
+    '/aclEntry/**': ['ROLE_ADMIN'],
+    '/persistentLogin/**': ['ROLE_ADMIN'],
+    '/requestmap/**': ['ROLE_ADMIN'],
+    '/securityInfo/**': ['ROLE_ADMIN'],
+    '/registrationCode/**': ['ROLE_ADMIN'],
+    '/role/**': ['ROLE_ADMIN'],
+    '/user/**': ['ROLE_ADMIN'],
+    '/job/**': ['ROLE_ADMIN'],
+    '/jobResult/**': ['ROLE_ADMIN'],
+    '/console/**': ['ROLE_ADMIN'],
+    '/register/**': ['IS_AUTHENTICATED_ANONYMOUSLY']
+]
+
+// Twitter Bootstrap config
+grails.views.javascript.library="jquery"
+
+jquery {
+    sources = 'js/jquery' // Holds the value where to store jQuery-js files /web-app/js/
+    version = '1.10.2' // The jQuery version in use
+}
+
+grails.plugins.twitterbootstrap.fixtaglib = true
+grails.plugins.twitterbootstrap.defaultBundle = 'bundle_bootstrap'
+
 

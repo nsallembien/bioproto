@@ -53,8 +53,8 @@
                                     <tr>
                                         <td>
                                             <div style="height:500px; overflow-y: scroll" class="infinite-scroll">
-                                                <p>${ raw(result.htmlOutput()) }</p>
-                                                <a class="jscroll-next" href="/bi-prototype/job/${result.id}/chunk/1">next</a>
+                                                <g:render template="result"
+                                                        model="[result:result, chunk:0]" />
                                             </div>
                                         </td>
                                         <td><g:link class="btn btn-small btn-inverse" controller="jobresult"

@@ -38,7 +38,7 @@ class HdfsReader {
         def bufferedReader = new BufferedReader(new InputStreamReader(fileSystem.open(thePath)));
         def charsToRead = 16 * 1024;
         char[] cBuff = new char[charsToRead] // (16k chars)
-        int foffset = chunk * charsToRead;
+        int foffset = 0 * charsToRead;
         int boffset = 0
         int charsRead = bufferedReader.read(cBuff, foffset, charsToRead)
         while (charsRead != -1 && charsToRead > 0) {

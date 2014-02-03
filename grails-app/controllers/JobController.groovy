@@ -13,9 +13,6 @@ class JobController {
 
     def nextChunk = {
         def jobResult = JobResult.get(params.id)
-        render {
-            p(id: 'outputparagraph', raw(jobResult.htmlOutput(params.int('chunk'))))
-            link(class: 'jscroll-next', action: 'nextChunk', id: params.id, chunk: params.int('chunk') + 1, 'next') 
-        }
+        render(template: "result", model: [result: jobResult, chunk: params.int('chunk')])
     }
 }

@@ -141,6 +141,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     '/user/**': ['ROLE_ADMIN'],
     '/job/**': ['ROLE_ADMIN'],
     '/jobResult/**': ['ROLE_ADMIN'],
+    '/result/**': ['ROLE_ADMIN'],
     '/console/**': ['ROLE_ADMIN'],
     '/register/**': ['IS_AUTHENTICATED_ANONYMOUSLY']
 ]

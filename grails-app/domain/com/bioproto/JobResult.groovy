@@ -5,6 +5,7 @@ class JobResult {
 
     String output;
     String hdfsOutputPath;
+    boolean parsed;
 
     static transient HdfsReader hdfsReader = new HdfsReader();
 
@@ -17,6 +18,14 @@ class JobResult {
     static constraints = {
         output(nullable: true)
         hdfsOutputPath(nullable: true)
+    }
+
+    def jsonOutput(chunk = 0) {
+        if (output == null) {
+            return hdfsReader.readPathAsTsv(hdfsOutputPath, chunk)
+        } else {
+            return []
+        }
     }
 
     def htmlOutput(chunk = 0) {

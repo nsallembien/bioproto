@@ -51,6 +51,7 @@ class BootStrap {
 10/05/08 17:43:28 INFO mapred.JobClient:     Reduce input records=102286"""
                 )
         exampleJobResult.job = exampleJobFinished
+        exampleJobResult.parsed = false
         exampleJobResult.save(failOnError: true)
 
         def exampleJob = new Job(name: "This is a running job", status: "in progress")
@@ -59,6 +60,7 @@ class BootStrap {
 
         def exampleJobResultHdfs = new JobResult(hdfsOutputPath: "hdfs://localhost/user/hadoop/Omniture.tsv")
         exampleJobResultHdfs.job = exampleJob
+        exampleJobResult.parsed = true
         exampleJobResultHdfs.save(failOnError: true)
 
     }

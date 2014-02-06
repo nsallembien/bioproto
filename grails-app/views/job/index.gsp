@@ -2,8 +2,62 @@
 <html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta name="layout" content="main"/>
-        <r:require modules="jquery"/>
-        <r:require modules="bootstrap"/>
+        <r:require module="jquery"/>
+        <r:require module="bigtable"/>
+        <r:require module="bootstrap"/>
+        <g:javascript library="jquery" plugin="jquery"/>
+        <style>
+#bigtable {
+	height: 200px;
+	width: 400px;
+	border: solid 1px black;
+}
+
+#bigtable .bigtable-headers {
+	height: 20px;
+}
+
+#bigtable .bigtable-body {
+	height: 180px;
+}
+
+.bigtable-container {
+	overflow: hidden;
+	position: relative;
+}
+
+.bigtable-container table {
+	table-layout: fixed;
+	border-collapse: collapse;
+	width: 1px;
+	height: 1px;
+}
+
+.bigtable-headers {
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+
+.bigtable-headers th {
+	height: 20px;
+	text-align: left;
+}
+
+.bigtable-body td {
+	overflow: hidden;
+	line-height: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.bigtable-body {
+	width: 100%;
+	overflow-y: scroll;
+	overflow-x: auto;
+	position: relative;
+}
+        </style>
     </head>
     <body>
         <section>
@@ -52,9 +106,15 @@
                                 <g:each in="${ job.results }" var="result">
                                     <tr>
                                         <td>
-                                            <div style="height:500px; overflow-y: scroll" class="infinite-scroll">
+                                            <div style="height:500px; width: 80%; overflow-y: scroll; overflow-x: scroll" class="infinite-scroll">
+                                            <g:if test="${result.isParsed()}">
                                                 <g:render template="result"
                                                         model="[result:result, chunk:0]" />
+                                            </g:if>
+                                            <g:else>
+                                                <g:render template="jsonResult"
+                                                        model="[result:result, chunk:0]" />
+                                            </g:else>
                                             </div>
                                         </td>
                                         <td><g:link class="btn btn-small btn-inverse" controller="jobresult"
@@ -77,24 +137,43 @@
                 </div>
             </div>
         </section>
-        <jq:plugin name="jscroll"/>
         <g:javascript>
-            $('ul.nav > li > a').click(function(e){
-                if($(this).attr('id') == "view-all"){
-                    $('div[id*="Job-"]').fadeIn('fast');
-                }else{
-                    var aRef = $(this);
-                    var tablesToHide = $('div[id*="Person-"]:visible').length > 1
-                            ? $('div[id*="Person-"]:visible') : $($('.nav > li[class="active"] > a').attr('href'));
-
-                    tablesToHide.hide();
-                    $(aRef.attr('href')).fadeIn('fast');
+            $.ajax({
+                url:"${g.createLink(controller:'job',action:'nextChunk_json', id:'2', chunk: '0')}",
+                dataType: 'json',
+                data: {
+                },
+                success: function(data) {
+                    alert(data)
+                },
+                error: function(request, status, error) {
+                    alert(error)
+                },
+                complete: function() {
                 }
-                $('.nav > li[class="active"]').removeClass('active');
-                $(this).parent().addClass('active');
             });
-            $('div.infinite-scroll').jscroll({
-                nextSelector: 'a.jscroll-next:last'
+            var myTable = new bigtable('bigtable', // id
+					['Column 0', 'Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9'], // column labels
+					[[1,2,3,4,5,6,7,8,9,10],
+					 [1,2,3,4,5,6,7,8,9,10],
+					 [1,2,3,4,5,6,7,8,9,10],
+					 [1,2,3,4,5,6,7,8,9,10],
+					 [1,2,3,4,5,6,7,8,9,10],
+					 [1,2,3,4,5,6,7,8,9,10]
+                     ]// numRows
+				);
+            $('ul.nav > li > a').click(function(e){
+               if($(this).attr('id') == "view-all"){
+                   $('div[id*="Job-"]').fadeIn('fast');
+               }else{
+                   var aRef = $(this);
+                   var tablesToHide = $('div[id*="Job-"]:visible').length > 1
+                           ? $('div[id*="Job-"]:visible') : $($('.nav > li[class="active"] > a').attr('href'));
+                   tablesToHide.hide();
+                   $(aRef.attr('href')).fadeIn('fast');
+               }
+               $('.nav > li[class="active"]').removeClass('active');
+               $(this).parent().addClass('active');
             });
         </g:javascript>
     </body>

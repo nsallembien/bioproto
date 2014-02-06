@@ -51,4 +51,17 @@ class HdfsReader {
         return builder.toString();
     }
 
+    def readPathAsTsv(path, chunk = 0) {
+        def json = []
+        def thePath = new Path(path);
+
+        def bufferedReader = new BufferedReader(new InputStreamReader(fileSystem.open(thePath)));
+        def csv = bufferedReader.toCsvReader([separatorChar: '\t'])
+        while (json.size() < 256) {
+            def tokens = csv.readNext();
+            json << tokens
+        }
+        return json
+    }
+
 }

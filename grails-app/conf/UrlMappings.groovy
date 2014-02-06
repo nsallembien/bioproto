@@ -11,6 +11,7 @@ class UrlMappings {
         "500"(view:'/error')
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")
-        "/job/$id/chunk/$chunk"(controller: "job", action: "nextChunk")
+        "/result/$id/chunk/$chunk"(controller: "job", action: "nextChunk")
+        "/result/$id/chunk.json/$chunk"(controller: "job", action: "nextChunk_json")
 	}
 }

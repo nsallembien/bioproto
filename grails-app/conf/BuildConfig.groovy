@@ -65,6 +65,8 @@ grails.project.dependency.resolution = {
         compile ':webxml:1.4.1'
         compile ':ws-client:1.0'
         compile ":jquery:1.11.0"
+        compile ":csv:0.3.1"
+        compile ":backbonejs:1.0.0"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.7" // or ":hibernate4:4.1.11.6"

@@ -30,25 +30,32 @@
 	border-collapse: collapse;
 	width: 1px;
 	height: 1px;
+    background-color: rgb(255,255,255);
 }
 
 .bigtable-headers {
 	overflow: hidden;
 	width: 100%;
 	position: relative;
+	border-bottom: 1px solid rgb(221, 221, 221);
+	border-top: 1px solid rgb(221, 221, 221);
 }
 
 .bigtable-headers th {
 	height: 20px;
 	text-align: left;
+	border-left: 1px solid rgb(221, 221, 221);
+	border-right: 1px solid rgb(221, 221, 221);
 }
 
 .bigtable-body td {
 	overflow: hidden;
 	line-height: 20px;
+    white-space: nowrap;
 	margin: 0;
 	padding: 0;
 	border: 1px solid rgb(221, 221, 221);
+    background-color: rgb(255,255,255);
 }
 
 .bigtable-body {
@@ -56,6 +63,7 @@
 	overflow-y: scroll;
 	overflow-x: auto;
 	position: relative;
+    background-color: rgb(255,255,255);
 }
         </style>
     </head>

@@ -8,9 +8,8 @@
         <g:javascript library="jquery" plugin="jquery"/>
         <style>
 #bigtable {
-	height: 200px;
-	width: 400px;
-	border: solid 1px black;
+	height: 500px;
+	width: 1024px;
 }
 
 #bigtable .bigtable-headers {
@@ -18,7 +17,7 @@
 }
 
 #bigtable .bigtable-body {
-	height: 180px;
+	height: 480px;
 }
 
 .bigtable-container {
@@ -49,6 +48,7 @@
 	line-height: 20px;
 	margin: 0;
 	padding: 0;
+	border: 1px solid rgb(221, 221, 221);
 }
 
 .bigtable-body {
@@ -106,7 +106,7 @@
                                 <g:each in="${ job.results }" var="result">
                                     <tr>
                                         <td>
-                                            <div style="height:500px; width: 80%; overflow-y: scroll; overflow-x: scroll" class="infinite-scroll">
+                                            <div style="height:500px">
                                             <g:if test="${result.isParsed()}">
                                                 <g:render template="result"
                                                         model="[result:result, chunk:0]" />
@@ -139,12 +139,15 @@
         </section>
         <g:javascript>
             $.ajax({
-                url:"${g.createLink(controller:'job',action:'nextChunk_json', id:'2', chunk: '0')}",
+                url:"/bi-prototype/result/2/chunk.json/0",
                 dataType: 'json',
-                data: {
-                },
+                data: {},
                 success: function(data) {
-                    alert(data)
+                    var columns = [];
+                    for (var i = 0; i < data[0].length; i++) {
+                        columns.push("Column " + i);
+                    }
+                    new bigtable('bigtable', columns, data);
                 },
                 error: function(request, status, error) {
                     alert(error)
@@ -152,16 +155,6 @@
                 complete: function() {
                 }
             });
-            var myTable = new bigtable('bigtable', // id
-					['Column 0', 'Column 1', 'Column 2', 'Column 3', 'Column 4', 'Column 5', 'Column 6', 'Column 7', 'Column 8', 'Column 9'], // column labels
-					[[1,2,3,4,5,6,7,8,9,10],
-					 [1,2,3,4,5,6,7,8,9,10],
-					 [1,2,3,4,5,6,7,8,9,10],
-					 [1,2,3,4,5,6,7,8,9,10],
-					 [1,2,3,4,5,6,7,8,9,10],
-					 [1,2,3,4,5,6,7,8,9,10]
-                     ]// numRows
-				);
             $('ul.nav > li > a').click(function(e){
                if($(this).attr('id') == "view-all"){
                    $('div[id*="Job-"]').fadeIn('fast');

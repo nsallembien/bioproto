@@ -16,7 +16,7 @@ class HdfsReader {
 
     HdfsReader() {
         def env = System.getenv()
-        String HADOOP_HOME = env["HADOOP_HOME"];
+        String HADOOP_HOME = env["HADOOP_HOME"] ?: "/tmp";
         println HADOOP_HOME
 
         conf = new Configuration();
@@ -36,7 +36,7 @@ class HdfsReader {
         def thePath = new Path(path);
 
         def bufferedReader = new BufferedReader(new InputStreamReader(fileSystem.open(thePath)));
-        def charsToRead = 16 * 1024;
+        def charsToRead = 160 * 1024;
         char[] cBuff = new char[charsToRead] // (16k chars)
         int foffset = 0 * charsToRead;
         int boffset = 0
@@ -57,8 +57,8 @@ class HdfsReader {
 
         def bufferedReader = new BufferedReader(new InputStreamReader(fileSystem.open(thePath)));
         def csv = bufferedReader.toCsvReader([separatorChar: '\t'])
-        while (json.size() < 256) {
-            def tokens = csv.readNext();
+        def tokens = null
+        while (json.size() < 10000 && (tokens = csv.readNext()) != null) {
             json << tokens
         }
         return json

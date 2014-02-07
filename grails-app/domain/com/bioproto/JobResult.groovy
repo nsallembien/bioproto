@@ -24,7 +24,15 @@ class JobResult {
         if (output == null) {
             return hdfsReader.readPathAsTsv(hdfsOutputPath, chunk)
         } else {
-            return []
+            def json = []
+
+            def bufferedReader = new StringReader(output);
+            def csv = bufferedReader.toCsvReader([separatorChar: '\t'])
+            def tokens = null
+            while (json.size() < 10000 && (tokens = csv.readNext()) != null) {
+                json << tokens
+            }
+            return json
         }
     }
 

@@ -19,7 +19,6 @@
 	<%-- Manual switch for the skin can be found in /view/_menu/_config.gsp --%>
 	<r:require modules="jquery"/> <%-- jQuery is required for Bootstrap! --%>
 	<r:require modules="bootstrap"/>
-	<r:require modules="bootstrap_utils"/>
 
 	<r:layoutResources />
 	<g:layoutHead />

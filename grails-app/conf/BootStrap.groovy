@@ -1,26 +1,37 @@
 import com.bioproto.User
 import com.bioproto.UserRole
 import com.bioproto.Role
-import com.bioproto.Job
-import com.bioproto.JobResult
+import com.bioproto.Dataset
 
 class BootStrap {
 
+    def createUser(name, email, password, role) {
+        def user = User.findByUsername(name) ?:
+            new User(username: name, password: password, enabled: true, email: email)
+                .save(failOnError: true)
+        if (!user.authorities.contains(role)) { 
+            UserRole.create user, role
+        }
+        return user
+    }
+
     def init = { servletContext ->
+
 
         // Bootstrap roles and users
         def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
-
         def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
-        def adminUser = User.findByUsername('admin') ?: new User( username: 'admin', password: 'admin', enabled: true, email: 'nsallembien@gmail.com').save(failOnError: true)
-
-        if (!adminUser.authorities.contains(adminRole)) { UserRole.create adminUser, adminRole }
+        def adminUser = createUser('admin', 'nsallembien@gmail.com', 'admin', adminRole)
+        if (!adminUser.authorities.contains(userRole)) { 
+            UserRole.create adminUser, userRole
+        }
+        def nico = createUser('nico', 'nsallembien@gmail.com', 'nico', userRole)
 
         // Bootstrap some test jobs
-        def exampleJobFinished = new Job(name: "This is a another job", status: "finished")
-        exampleJobFinished.owner = adminUser
-        exampleJobFinished.save(failOnError: true)
-        def exampleJobResult = new JobResult (output: """\
+        def exampleDataset1 = new Dataset(name: "This is an unprocessed dataset", status: "in progress")
+        exampleDataset1.owner = adminUser
+        exampleDataset1.parsed = false
+        exampleDataset1.output =  """\
 10/05/08 17:43:00 INFO input.FileInputFormat: Total input paths to process : 3
 10/05/08 17:43:01 INFO mapred.JobClient: Running job: job_201005081732_0001
 10/05/08 17:43:02 INFO mapred.JobClient:  map 0% reduce 0%
@@ -49,19 +60,13 @@ class BootStrap {
 10/05/08 17:43:28 INFO mapred.JobClient:     Combine input records=629187
 10/05/08 17:43:28 INFO mapred.JobClient:     Map output records=629187
 10/05/08 17:43:28 INFO mapred.JobClient:     Reduce input records=102286"""
-                )
-        exampleJobResult.job = exampleJobFinished
-        exampleJobResult.parsed = false
-        exampleJobResult.save(failOnError: true)
+        exampleDataset1.save(failOnError: true)
 
-        def exampleJob = new Job(name: "This is a running job", status: "in progress")
-        exampleJob.owner = adminUser
-        exampleJob.save(failOnError: true)
-
-        def exampleJobResultHdfs = new JobResult(hdfsOutputPath: "hdfs://localhost/user/hadoop/Omniture.tsv")
-        exampleJobResultHdfs.job = exampleJob
-        exampleJobResult.parsed = true
-        exampleJobResultHdfs.save(failOnError: true)
+        def exampleDataset = new Dataset(name: "This is a dataset that is being worked on", status: "in progress")
+        exampleDataset.owner = adminUser
+        exampleDataset.parsed = true
+        exampleDataset.hdfsOutputPath = "hdfs://localhost/user/hadoop/Omniture.tsv"
+        exampleDataset.save(failOnError: true)
 
     }
 

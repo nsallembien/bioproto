@@ -1,6 +1,8 @@
 class UrlMappings {
 
 	static mappings = {
+        "/dataset/$id/chunk/$chunk"(controller: "dataset", action: "nextChunk")
+        "/dataset/$id/chunk.json/$chunk"(controller: "dataset", action: "nextChunk_json")
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here
@@ -12,7 +14,5 @@ class UrlMappings {
         "404"(view:'/404')
         "/login/$action?"(controller: "login")
         "/logout/$action?"(controller: "logout")
-        "/result/$id/chunk/$chunk"(controller: "job", action: "nextChunk")
-        "/result/$id/chunk.json/$chunk"(controller: "job", action: "nextChunk_json")
 	}
 }

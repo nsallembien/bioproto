@@ -122,29 +122,18 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.bioproto.User
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.bioproto.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.bioproto.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                              ['permitAll'],
-	'/index':                         ['permitAll'],
-	'/index.gsp':                     ['permitAll'],
-	'/**/js/**':                      ['permitAll'],
-	'/**/css/**':                     ['permitAll'],
-	'/**/images/**':                  ['permitAll'],
-	'/**/favicon.ico':                ['permitAll'],
-    '/aclClass/**': ['ROLE_ADMIN'],
-    '/aclSid/**': ['ROLE_ADMIN'],
-    '/aclObjectIdentity/**': ['ROLE_ADMIN'],
-    '/aclEntry/**': ['ROLE_ADMIN'],
-    '/persistentLogin/**': ['ROLE_ADMIN'],
-    '/requestmap/**': ['ROLE_ADMIN'],
-    '/securityInfo/**': ['ROLE_ADMIN'],
-    '/registrationCode/**': ['ROLE_ADMIN'],
-    '/role/**': ['ROLE_ADMIN'],
-    '/user/**': ['ROLE_ADMIN'],
-    '/job/**': ['ROLE_ADMIN'],
-    '/jobResult/**': ['ROLE_ADMIN'],
-    '/result/**': ['ROLE_ADMIN'],
-    '/console/**': ['ROLE_ADMIN'],
-    '/register/**': ['IS_AUTHENTICATED_ANONYMOUSLY']
-]
+   '/':                  ['permitAll'],
+   '/index':             ['permitAll'],
+   '/index.gsp':         ['permitAll'],
+   '/**/js/**':          ['permitAll'],
+   '/**/css/**':         ['permitAll'],
+   '/**/images/**':      ['permitAll'],
+   '/**/favicon.ico':    ['permitAll'],
+   '/login/**':          ['permitAll'],
+   '/logout/**':         ['permitAll'],
+   '/dbconsole/**':      ['ROLE_ADMIN'],
+   '/systeminfo/**':      ['ROLE_ADMIN']
+   ]
 
 // Twitter Bootstrap config
 grails.views.javascript.library="jquery"
@@ -156,5 +145,7 @@ jquery {
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 grails.plugins.twitterbootstrap.defaultBundle = 'bundle_bootstrap'
+
+grails.views.gsp.sitemesh.preprocess=false
 
 

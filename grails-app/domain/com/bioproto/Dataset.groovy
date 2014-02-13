@@ -1,26 +1,28 @@
 package com.bioproto
 
-
-class JobResult {
-
-    String output;
-    String hdfsOutputPath;
-    boolean parsed;
+class Dataset {
 
     static transient HdfsReader hdfsReader = new HdfsReader();
 
-    static belongsTo = [job: Job];
+    String name;
+    String status;
+    String output;
 
-    static mapping = {
-        output type: "text"
-    }
+    String hdfsOutputPath;
+    boolean parsed;
+
+    static belongsTo = [owner: User]
 
     static constraints = {
         output(nullable: true)
         hdfsOutputPath(nullable: true)
     }
 
-    def jsonOutput(chunk = 0) {
+    static mapping = {
+        output type: "text"
+    }
+
+    def formattedChunk(chunk = 0) {
         if (output == null) {
             return hdfsReader.readPathAsTsv(hdfsOutputPath, chunk)
         } else {

@@ -14,7 +14,7 @@ class User {
 
 	static transients = ['springSecurityService']
 
-    static hasMany = [jobs: Job]
+    static hasMany = [datasets: Dataset]
 
 	static constraints = {
 		username blank: false, unique: true

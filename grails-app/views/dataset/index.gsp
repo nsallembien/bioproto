@@ -72,26 +72,26 @@
             <div class="container">
                 <div class="row">
                     <header class="page-header">
-                        <h3>John O'Ravenbien's <small class="lead">job List</small></h3>
+                        <h3>John O'Ravenbien's <small class="lead">Datasets</small></h3>
                     </header>
                     <div class="span3">
                         <g:link class="btn btn-block btn-link" action="create">
-                            Create New Job
+                            Create New Dataset
                         </g:link>
                         <div class="well">
                             <ul class="nav nav-list">
-                                <li class="nav-header">Jobs</li>
+                                <li class="nav-header">Current Datasets</li>
                                 <li class="active">
                                     <a id="view-all" href="#">
                                         <i class="icon-chevron-right pull-right"></i>
                                         <b>View All</b>
                                     </a>
                                 </li>
-                            <g:each in="${ jobs }" var="job" status="i">
+                            <g:each in="${ datasets }" var="dst" status="i">
                                 <li>
-                                    <a href="#Job-${job.id}">
+                                    <a href="#Dataset-${dst.id}">
                                         <i class="icon-chevron-right pull-right"></i>
-                                        ${ "${ job.name }" }
+                                        ${ "${ dst.name }" }
                                     </a>
                                 </li>
                             </g:each>
@@ -99,43 +99,39 @@
                         </div>
                     </div>
                     <div class="span9">
-                    <g:each in="${ jobs }" var="job" status="i">
-                        <div id="Job-${ job.id }" class="well well-small">
+                    <g:each in="${ datasets }" var="dst" status="i">
+                        <div id="Dataset-${ dst.id }" class="well well-small">
                             <table class="table table-bordered table-striped">
                                 <caption>
-                                    ${ "${ job.name } ${ job.status }" }: list of past results
+                                    ${ "${ dst.name } – ${ dst.status }" }
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <th>Output</th>
+                                        <th>Content</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <g:each in="${ job.results }" var="result">
                                     <tr>
                                         <td>
                                             <div style="height:500px">
-                                            <g:if test="${result.isParsed()}">
-                                                <g:render template="result"
-                                                        model="[result:result, chunk:0]" />
+                                            <g:if test="${dst.isParsed()}">
+                                                <g:render template="jsonChunk" model="[dataset:dst, chunk:0]" />
                                             </g:if>
                                             <g:else>
-                                                <g:render template="jsonResult"
-                                                        model="[result:result, chunk:0]" />
+                                                <g:render template="chunk" model="[dataset:dst, chunk:0]" />
                                             </g:else>
                                             </div>
                                         </td>
-                                        <td><g:link class="btn btn-small btn-inverse" controller="jobresult"
-                                                    action="delete" id="${result.id}">
+                                        <td><g:link class="btn btn-small btn-inverse" controller="dataset"
+                                                    action="delete" id="${dst.id}">
                                                 <i class="icon-edit icon-white"></i>Delete
                                             </g:link>
                                         </td>
                                     </tr>
-                                </g:each>
                                 </tbody>
                             </table>
                             <div class="btn-group">
-                                <g:link class="btn btn-primary" action="edit" id="${job.id}">
+                                <g:link class="btn btn-primary" action="edit" id="${dst.id}">
                                     <i class="icon-edit icon-white"></i>Edit
                                 </g:link>
                             </div>
@@ -147,7 +143,7 @@
         </section>
         <g:javascript>
             $.ajax({
-                url:"/bi-prototype/result/2/chunk.json/0",
+                url:"/bi-prototype/dataset/2/chunk.json/0",
                 dataType: 'json',
                 data: {},
                 success: function(data) {
@@ -165,11 +161,11 @@
             });
             $('ul.nav > li > a').click(function(e){
                if($(this).attr('id') == "view-all"){
-                   $('div[id*="Job-"]').fadeIn('fast');
+                   $('div[id*="Dataset-"]').fadeIn('fast');
                }else{
                    var aRef = $(this);
-                   var tablesToHide = $('div[id*="Job-"]:visible').length > 1
-                           ? $('div[id*="Job-"]:visible') : $($('.nav > li[class="active"] > a').attr('href'));
+                   var tablesToHide = $('div[id*="Dataset-"]:visible').length > 1
+                           ? $('div[id*="Dataset-"]:visible') : $($('.nav > li[class="active"] > a').attr('href'));
                    tablesToHide.hide();
                    $(aRef.attr('href')).fadeIn('fast');
                }

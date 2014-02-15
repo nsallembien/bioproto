@@ -75,9 +75,6 @@
                         <h3>John O'Ravenbien's <small class="lead">Datasets</small></h3>
                     </header>
                     <div class="span3">
-                        <g:link class="btn btn-block btn-link" action="create">
-                            Create New Dataset
-                        </g:link>
                         <div class="well">
                             <ul class="nav nav-list">
                                 <li class="nav-header">Current Datasets</li>
@@ -101,6 +98,15 @@
                     <div class="span9">
                     <g:each in="${ datasets }" var="dst" status="i">
                         <div id="Dataset-${ dst.id }" class="well well-small">
+                            <div class="btn-group">
+                                <g:link class="btn btn-primary" action="edit" id="${dst.id}">
+                                    <i class="icon-edit icon-white"></i>Edit
+                                </g:link>
+                                <g:link class="btn btn-primary" controller="dataset"
+                                    action="delete" id="${dst.id}">
+                                    <i class="icon-delete icon-white"></i>Delete
+                                </g:link>
+                            </div>
                             <table class="table table-bordered table-striped">
                                 <caption>
                                     ${ "${ dst.name } – ${ dst.status }" }
@@ -121,20 +127,9 @@
                                                 <g:render template="chunk" model="[dataset:dst, chunk:0]" />
                                             </g:else>
                                             </div>
-                                        </td>
-                                        <td><g:link class="btn btn-small btn-inverse" controller="dataset"
-                                                    action="delete" id="${dst.id}">
-                                                <i class="icon-edit icon-white"></i>Delete
-                                            </g:link>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="btn-group">
-                                <g:link class="btn btn-primary" action="edit" id="${dst.id}">
-                                    <i class="icon-edit icon-white"></i>Edit
-                                </g:link>
-                            </div>
                         </div>
                     </g:each>
                     </div>

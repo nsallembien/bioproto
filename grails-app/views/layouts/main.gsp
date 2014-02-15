@@ -32,9 +32,9 @@
 </head>
 
 <body>
-	<g:render template="/_menu/navbar"/>														
+	<g:render template="/_menu/navbar"/>
 
-	<!-- Enable to overwrite Header by individual page -->
+    <!-- Enable to overwrite Header by individual page -->
 	<g:if test="${ pageProperty(name:'page.header') }">
    		<g:pageProperty name="page.header" />
 	</g:if>

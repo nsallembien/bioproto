@@ -1,5 +1,8 @@
-<nav id="Navbar" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-	<div class="container">
+<nav id="Navbar" class="navbar navbar-fixed-top navbar-inverse" role="navigation" style="background-color:#ffffff;border:0px;">
+    	<a class="navbar-brand" href="${createLink(uri: '/')}">
+			<img class="logo" src="${resource(plugin: 'kickstart', dir:'images', file:'brand_logo.png')}" alt="${meta(name:'app.name')}" width="226px" height="78px"/> 
+	    </a>
+	<div class="container" style="color:#ffffff">
 	
 	    <div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -17,7 +20,6 @@
 			<g:render template="/_menu/admin"/>														
 			<g:render template="/_menu/info"/>														
 			<g:render template="/_menu/user"/><!-- NOTE: the renderDialog for the "Register" modal dialog MUST be placed outside the NavBar (at least for Bootstrap 2.1.1): see bottom of main.gsp -->
-			<g:render template="/_menu/language"/>														
 	    </ul>			
 
 		</div>

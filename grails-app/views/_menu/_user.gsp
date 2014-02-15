@@ -1,4 +1,4 @@
-<ul class="nav pull-right">
+<ul class="nav pull-right" style="margin-top:5px;">
 	<li class="dropdown">
 	
 <sec:ifNotLoggedIn>

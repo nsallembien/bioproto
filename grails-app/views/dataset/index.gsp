@@ -99,6 +99,9 @@
                     <g:each in="${ datasets }" var="dst" status="i">
                         <div id="Dataset-${ dst.id }" class="well well-small">
                             <div class="btn-group">
+                                <g:link class="btn btn-primary" action="query" id="${dst.id}">
+                                    <i class="icon-edit icon-white"></i>Query
+                                </g:link>
                                 <g:link class="btn btn-primary" action="edit" id="${dst.id}">
                                     <i class="icon-edit icon-white"></i>Edit
                                 </g:link>

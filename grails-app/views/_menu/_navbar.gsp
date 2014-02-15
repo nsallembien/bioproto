@@ -1,6 +1,6 @@
 <nav id="Navbar" class="navbar navbar-fixed-top navbar-inverse" role="navigation" style="background-color:#ffffff;border:0px;">
     	<a class="navbar-brand" href="${createLink(uri: '/')}">
-			<img class="logo" src="${resource(plugin: 'kickstart', dir:'images', file:'brand_logo.png')}" alt="${meta(name:'app.name')}" width="226px" height="78px"/> 
+			<img class="logo" src="${resource(plugin: 'kickstart', dir:'images', file:'brand_logo.png')}" alt="${meta(name:'app.name')}" width="117px" height="46px"/> 
 	    </a>
 	<div class="container" style="color:#ffffff">
 	

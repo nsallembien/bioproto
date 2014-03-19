@@ -9,7 +9,7 @@
         <style>
 #bigtable {
 	height: 500px;
-	width: 1024px;
+	width: 1094px;
 }
 
 #bigtable .bigtable-headers {
